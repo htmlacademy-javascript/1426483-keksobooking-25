@@ -1,21 +1,22 @@
-function randomInteger(min, max) {
+function getRandomInteger(min, max) {
   if (min < max && min >= 0) {
-    const random = min + Math.random() * (max + 1 - min);
+    const random = min + Math.random() * (max - min + 1);
     return Math.floor(random);
   }
-
-  return 'переданы некорректные значения границ интервала';
-
+  return 'Переданы некорректные значения границ интервала';
 }
 
-randomInteger(85, 82);
+getRandomInteger(85, 82);
 
-function randomRealNumber(min, max, num) {
+function getRandomRealNumber(min, max, numOfDecimal) {
   if (min < max && min >= 0) {
-    const random = min + Math.random() * (max - min +  10 ** -num);
-    return Number(random.toFixed(num));
+    const random = min + Math.random() * (max - min + 10 ** -numOfDecimal);
+    return Number(random.toFixed(numOfDecimal));
   }
+  return 'Переданы некорректные значения границ интервала';
 }
 
 
-randomRealNumber(1.1, 1.2, 3);
+getRandomRealNumber(1.1, 1.2, 3);
+
+
