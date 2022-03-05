@@ -1,29 +1,24 @@
-function getRandomInteger(min, max) {
+const getRandomInteger = (min, max) => {
   if (min < max && min >= 0) {
     const random = min + Math.random() * (max - min + 1);
     return Math.floor(random);
   }
   return 'Переданы некорректные значения границ интервала';
-}
+};
 
-function getRandomRealNumber(min, max, numOfDecimal) {
+const getRandomRealNumber = (min, max, numOfDecimal) => {
   if (min < max && min >= 0) {
     const random = min + Math.random() * (max - min + 10 ** -numOfDecimal);
     return Number(random.toFixed(numOfDecimal));
   }
   return 'Переданы некорректные значения границ интервала';
-}
-
-const getAvatarLink = (i) => {
-  if (i < 10) {
-    return `0${i}`;
-  }
-  return 10;
 };
+
+const getNumberWithLeadZero = (i) => (i < 10) ? `0${i}` : 10;
 
 const OFFER_COUNT = 10;
 
-const TYPE = [
+const TYPES = [
   'palace',
   'flat',
   'house',
@@ -31,7 +26,7 @@ const TYPE = [
   'hotel'
 ];
 
-const TIME = [
+const TIMES = [
   '12:00',
   '13:00',
   '14:00'
@@ -46,7 +41,7 @@ const FEATURES = [
   'conditioner'
 ];
 
-const DESCRIPTIONS= [
+const DESCRIPTIONS = [
   'under 5 min walk to Falls',
   'Backyard Oasis-Pool',
   'views of wine country',
@@ -58,7 +53,8 @@ const DESCRIPTIONS= [
   'air conditioning, very bright',
   'exceptional location perfect for spending the winter'
 ];
-const TITLE = [
+
+const TITLES = [
   'Guest suite',
   'Clean and stylish loft',
   'Chic 3 bedroom home',
@@ -71,52 +67,54 @@ const TITLE = [
   'Modern apartment'
 ];
 
-const PHOTOS_LINK = [
+const PHOTOS_LINKS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const getPhotosArray = () => {
-  const rangeLimitOne = getRandomInteger(0, 2);
-  const rangeLimitTwo = getRandomInteger(0, 2);
+const getRandomArrayPart = (arr) => {
+  const count = arr.length - 1;
+  const rangeLimitOne = getRandomInteger(0, count);
+  const rangeLimitTwo = getRandomInteger(0, count);
   if (rangeLimitOne < rangeLimitTwo) {
-    return PHOTOS_LINK.slice(rangeLimitOne, rangeLimitTwo + 1);
+    return arr.slice(rangeLimitOne, rangeLimitTwo + 1);
   }
-  return PHOTOS_LINK.slice(rangeLimitTwo, rangeLimitOne + 1);
+  return arr.slice(rangeLimitTwo, rangeLimitOne + 1);
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const createOffer = (i) => {
-  const propose = {
+  const lat = getRandomRealNumber(35.65, 35.7, 5);
+  const lng = getRandomRealNumber(139.7, 139.8, 5);
+  const checks = [getRandomInteger(0, TIMES.length - 1), getRandomInteger(0, TIMES.length - 1)];
+  return {
     author: {
-      avatar: `img/avatars/user${getAvatarLink(i)}.png`,
+      avatar: `img/avatars/user${getNumberWithLeadZero(i + 1)}.png`,
     },
     offer: {
-      title: TITLE[i],
-      address: '',
-      price: getRandomInteger(0, 100),
-      type: getRandomArrayElement(TYPE),
-      rooms: getRandomInteger(0, 10),
-      guests: getRandomInteger(0, 10),
-      checkin: getRandomArrayElement(TIME),
-      checkout: getRandomArrayElement(TIME),
+      title: TITLES[i],
+      address: `${lat}, ${lng}`,
+      price: getRandomInteger(1, 100),
+      type: getRandomArrayElement(TYPES),
+      rooms: getRandomInteger(1, 10),
+      guests: getRandomInteger(1, 10),
+      checkin: TIMES[Math.min(...checks)],
+      checkout: TIMES[Math.max(...checks)],
       features: getRandomArrayElement(FEATURES),
       description: DESCRIPTIONS[i],
-      photos: getPhotosArray(),
+      photos: getRandomArrayPart(PHOTOS_LINKS),
     },
     location: {
-      lat: getRandomRealNumber(35.65000, 35.70000, 5),
-      lng: getRandomRealNumber(139.70000, 139.80000, 5),
+      lat,
+      lng,
     }
   };
-  propose.offer.address = `${propose.location.lat}, ${propose.location.lng}`;
-  return propose;
 };
+
 function createOffers() {
   return Array.from({ length: OFFER_COUNT }, (el, i) => createOffer(i));
 }
 
 createOffers();
-
