@@ -1,4 +1,3 @@
-import {createOffers} from './data.js';
+import {createOffers} from './create-offers.js';
 
 createOffers();
-
