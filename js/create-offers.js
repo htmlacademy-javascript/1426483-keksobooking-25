@@ -13,7 +13,7 @@ const createOffer = (i) => {
       title: TITLES[i],
       address: `${lat}, ${lng}`,
       price: getRandomInteger(1, 100),
-      type: getRandomArrayElement(TYPES),
+      type: getRandomArrayElement(Object.keys(TYPES)),
       rooms: getRandomInteger(1, 10),
       guests: getRandomInteger(1, 10),
       checkin: TIMES[Math.min(...checks)],
