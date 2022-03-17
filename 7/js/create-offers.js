@@ -1,5 +1,5 @@
-import {OFFER_COUNT, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS} from './data.js';
-import {getRandomInteger, getRandomRealNumber, getRandomArrayElement, getRandomArrayPart, getNumberWithLeadZero} from './util.js';
+import { OFFER_COUNT, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS } from './data.js';
+import { getRandomInteger, getRandomRealNumber, getRandomArrayElement, getRandomArrayPart, getNumberWithLeadZero } from './util.js';
 
 const createOffer = (i) => {
   const lat = getRandomRealNumber(35.65, 35.7, 5);
