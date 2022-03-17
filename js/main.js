@@ -1,4 +1,6 @@
-import {createOffers} from './create-offers.js';
 import './generate-card.js';
+import {deactivationForm, activationForm} from './activation-form.js';
 
-createOffers();
+deactivationForm();
+activationForm();
+
