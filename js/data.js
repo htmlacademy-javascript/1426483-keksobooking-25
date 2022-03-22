@@ -1,12 +1,12 @@
 const OFFER_COUNT = 10;
 
-// const TYPES = [
-//   'palace',
-//   'flat',
-//   'house',
-//   'bungalow',
-//   'hotel'
-// ];
+const ROOMTOGUESTS = {
+  1: ['1'],
+  2: ['1', '2'],
+  3: ['1', '2', '3'],
+  100: ['0']
+};
+
 const TYPES = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -62,4 +62,4 @@ const PHOTOS_LINKS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-export {OFFER_COUNT, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS};
+export {OFFER_COUNT, ROOMTOGUESTS, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS};

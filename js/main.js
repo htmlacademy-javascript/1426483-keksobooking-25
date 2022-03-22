@@ -1,6 +1,7 @@
 import './generate-card.js';
-import { deactivateForm, activateForm } from './forms.js';
+import './forms.js';
+import { deactivateForms, activateForms } from './forms.js';
 
-deactivateForm();
-activateForm();
+deactivateForms();
+activateForms();
 
