@@ -1,4 +1,4 @@
-import { ROOMTOGUESTS } from './data.js';
+import {  ROOM_TO_GUESTS } from './data.js';
 
 const offerForm = document.querySelector('.ad-form');
 const filterForm = document.querySelector('.map__filters');
@@ -11,34 +11,12 @@ const pristine = new Pristine(offerForm, {
   errorTextClass: 'form__error-text'
 });
 
-// валидация поля ввода Заголовка объявления
-function validateTitle (value) {
-  return value.length >= 30 && value.length <= 100;
-}
-
-pristine.addValidator(
-  offerForm.querySelector('#title'),
-  validateTitle,
-  'От 30 до 100 символов'
-);
-
-// валидация поля ввода Цены за ночь
-function validatePrice (value) {
-  return value <= 100000;
-}
-
-pristine.addValidator(
-  offerForm.querySelector('#price'),
-  validatePrice,
-  'Максимальное значение — 100 000'
-);
-
 const numberOfRoomsSelect = offerForm.querySelector('#room_number');
 const capacitySelect = offerForm.querySelector('#capacity');
 
 // функция проверки соотвествия кол-ва комнат кол-ву гостей
 function validateCapacity() {
-  return ROOMTOGUESTS[numberOfRoomsSelect.value].includes(capacitySelect.value);
+  return  ROOM_TO_GUESTS[numberOfRoomsSelect.value].includes(capacitySelect.value);
 }
 
 // функция генерации сообщений об ошибке
@@ -48,7 +26,7 @@ function getCapacityErrorMessage () {
   return `
     ${roomsSelectedOption.textContent}
     ${roomsSelectedOption.textContent === '1 комната' ? 'не подходит' : 'не подходят'}
-    ${guestsSelectedOption.value !== '0' ? guestsSelectedOption.textContent : ''}
+    ${guestsSelectedOption.value !== '0' ? guestsSelectedOption.textContent : 'для вашего варианта'}
   `;
 }
 
@@ -63,17 +41,13 @@ const onSelectChange = function () {
   pristine.validate(numberOfRoomsSelect);
 };
 
-numberOfRoomsSelect.addEventListener('change', onSelectChange);
 capacitySelect.addEventListener('change', onSelectChange);
 
-offerForm.addEventListener('input', () => {
-  const isValid = pristine.validate();
-  offerForm.querySelector('.ad-form__submit').disabled = !isValid;
-});
-
 offerForm.addEventListener('submit', (evt) => {
+  if (pristine.validate()) {
+    return;
+  }
   evt.preventDefault();
-  pristine.validate();
 });
 
 
