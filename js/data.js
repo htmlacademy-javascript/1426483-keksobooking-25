@@ -1,6 +1,6 @@
 const OFFER_COUNT = 10;
 
-const ROOMTOGUESTS = {
+const  ROOM_TO_GUESTS = {
   1: ['1'],
   2: ['1', '2'],
   3: ['1', '2', '3'],
@@ -62,4 +62,4 @@ const PHOTOS_LINKS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-export {OFFER_COUNT, ROOMTOGUESTS, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS};
+export {OFFER_COUNT,  ROOM_TO_GUESTS, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS};
