@@ -35,7 +35,7 @@ pristine.addValidator(
   getCapacityErrorMessage
 );
 
-//обработчик события выбора кол-ва комнат
+// обработчик события выбора кол-ва комнат
 const onCapacityChange = () => {
   pristine.validate(numberOfRoomsSelect);
 };
@@ -44,17 +44,13 @@ capacitySelect.addEventListener('change', onCapacityChange);
 
 // валидатор поля ввода цены
 const priceField = offerForm.querySelector('#price');
+priceField.min ='5000';
 
-const validatePrice = (value) => {
-  if (!priceField.min) {
-    priceField.min ='5000';
-  }
-  return (value >= Number(priceField.min) && value <= 100000);
-};
+const validatePrice = (value) => (value >= Number(priceField.min));
 
 const getPriceErrorMessage = () => {
-  if (priceField.value >= 100000) {
-    return 'Максимальное значение 100000';
+  if (!priceField.value) {
+    return 'Введите число';
   }
   return `Значение не может быть меньше ${priceField.min}`;
 };
@@ -66,21 +62,22 @@ pristine.addValidator(
 );
 
 
-//обработка пользовательского ввода для поля Тип жилья
+// обработка пользовательского ввода для поля Тип жилья
 const typeSelect = offerForm.querySelector('#type');
 
 const onTypeChange = () => {
+  const errorText = priceField.closest('.ad-form__element').querySelector('.form__error-text');
   priceField.value = '';
   priceField.placeholder = MIN_PRICE[typeSelect.value];
   priceField.min = MIN_PRICE[typeSelect.value];
-  if (priceField.closest('.ad-form__element').querySelector('.form__error-text')) {
-    priceField.closest('.ad-form__element').querySelector('.form__error-text').textContent = '';
+  if (errorText) {
+    errorText.textContent = '';
   }
 };
 
 typeSelect.addEventListener('change', onTypeChange);
 
-//обработка пользовательского ввода для полей Время заезда и выезда
+// обработка пользовательского ввода для полей Время заезда и выезда
 const timeInSelect = offerForm.querySelector('#timein');
 const timeOutSelect = offerForm.querySelector('#timeout');
 
@@ -95,7 +92,7 @@ const onTimeOutChange = () => {
 timeInSelect.addEventListener('change', onTimeInChange);
 timeOutSelect.addEventListener('change', onTimeOutChange);
 
-//валидация формы перед отправкой
+// валидация формы перед отправкой
 offerForm.addEventListener('submit', (evt) => {
   if (pristine.validate()) {
     return;
@@ -103,7 +100,7 @@ offerForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 });
 
-//активация форм
+// активация форм
 const  deactivateFieldset = (fieldset) => {
   fieldset.disabled = true;
 };
