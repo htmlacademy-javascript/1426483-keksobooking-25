@@ -1,10 +1,18 @@
 const OFFER_COUNT = 10;
 
-const  ROOM_TO_GUESTS = {
+const ROOM_TO_GUESTS = {
   1: ['1'],
   2: ['1', '2'],
   3: ['1', '2', '3'],
   100: ['0']
+};
+
+const MIN_PRICE = {
+  palace: '10000',
+  flat: '1000',
+  house: '5000',
+  bungalow: '0',
+  hotel: '3000'
 };
 
 const TYPES = {
@@ -62,4 +70,4 @@ const PHOTOS_LINKS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-export {OFFER_COUNT,  ROOM_TO_GUESTS, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS};
+export { OFFER_COUNT, ROOM_TO_GUESTS, MIN_PRICE, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS };
