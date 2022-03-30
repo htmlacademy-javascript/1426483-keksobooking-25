@@ -1,9 +1,21 @@
-import { ROOM_TO_GUESTS, MIN_PRICE } from './data.js';
+import { ROOM_TO_GUESTS, MIN_PRICE, MAX_PRICE} from './data.js';
+import { createSlider, updateSlider } from './slider.js';
+import { addMainPinMarkerHandlers } from './map.js';
 
 const offerForm = document.querySelector('.ad-form');
 const filterForm = document.querySelector('.map__filters');
 const offerFormFieldsets = offerForm.querySelectorAll('fieldset');
 const filterFormFieldsets = filterForm.querySelectorAll('fieldset');
+const numberOfRoomsSelect = offerForm.querySelector('#room_number');
+const capacitySelect = offerForm.querySelector('#capacity');
+const sliderElement = offerForm.querySelector('.ad-form__slider');
+const priceField = offerForm.querySelector('#price');
+const typeSelect = offerForm.querySelector('#type');
+const timeInSelect = offerForm.querySelector('#timein');
+const timeOutSelect = offerForm.querySelector('#timeout');
+const addressField = offerForm.querySelector('#address');
+
+// const points = createOffers();
 
 const pristine = new Pristine(offerForm, {
   classTo: 'ad-form__element',
@@ -11,14 +23,20 @@ const pristine = new Pristine(offerForm, {
   errorTextClass: 'form__error-text'
 });
 
-const numberOfRoomsSelect = offerForm.querySelector('#room_number');
-const capacitySelect = offerForm.querySelector('#capacity');
+const priceUISlider = createSlider(sliderElement, priceField, pristine.validate(priceField));
 
-// функция проверки соотвествия кол-ва комнат кол-ву гостей
+// функции валидации
+const validatePrice = (value) => {
+  const price = Number(value || 0);
+  const inRange = price >= Number(priceField.min) && price <= MAX_PRICE;
+  return /^\d+$/.test(value) && inRange;
+};
+
 const validateCapacity = () => ROOM_TO_GUESTS[numberOfRoomsSelect.value].includes(capacitySelect.value);
 
+// функции генерации сообщений об ошибке
+const getPriceErrorMessage = () => `Выберите число между ${priceField.min} и ${MAX_PRICE}`;
 
-// функция генерации сообщений об ошибке
 const getCapacityErrorMessage = () => {
   const roomsSelectedOption = numberOfRoomsSelect.options[numberOfRoomsSelect.selectedIndex];
   const guestsSelectedOption = capacitySelect.options[capacitySelect.selectedIndex];
@@ -29,57 +47,21 @@ const getCapacityErrorMessage = () => {
   `;
 };
 
-pristine.addValidator(
-  numberOfRoomsSelect,
-  validateCapacity,
-  getCapacityErrorMessage
-);
-
-// обработчик события выбора кол-ва комнат
+// обработчики событий
 const onCapacityChange = () => {
   pristine.validate(numberOfRoomsSelect);
 };
 
-capacitySelect.addEventListener('change', onCapacityChange);
-
-// валидатор поля ввода цены
-const priceField = offerForm.querySelector('#price');
-priceField.min ='5000';
-
-const validatePrice = (value) => (value >= Number(priceField.min));
-
-const getPriceErrorMessage = () => {
-  if (!priceField.value) {
-    return 'Введите число';
-  }
-  return `Значение не может быть меньше ${priceField.min}`;
+const setPriceAttributes = () => {
+  const minPrice = MIN_PRICE[typeSelect.value];
+  priceField.min = minPrice;
+  priceField.placeholder = minPrice;
 };
-
-pristine.addValidator(
-  priceField,
-  validatePrice,
-  getPriceErrorMessage
-);
-
-
-// обработка пользовательского ввода для поля Тип жилья
-const typeSelect = offerForm.querySelector('#type');
 
 const onTypeChange = () => {
-  const errorText = priceField.closest('.ad-form__element').querySelector('.form__error-text');
-  priceField.value = '';
-  priceField.placeholder = MIN_PRICE[typeSelect.value];
-  priceField.min = MIN_PRICE[typeSelect.value];
-  if (errorText) {
-    errorText.textContent = '';
-  }
+  setPriceAttributes();
+  updateSlider(sliderElement, +MIN_PRICE[typeSelect.value]);
 };
-
-typeSelect.addEventListener('change', onTypeChange);
-
-// обработка пользовательского ввода для полей Время заезда и выезда
-const timeInSelect = offerForm.querySelector('#timein');
-const timeOutSelect = offerForm.querySelector('#timeout');
 
 const onTimeInChange = () => {
   timeOutSelect.value = timeInSelect.value;
@@ -89,9 +71,43 @@ const onTimeOutChange = () => {
   timeInSelect.value = timeOutSelect.value;
 };
 
+// слушатели
+capacitySelect.addEventListener('change', onCapacityChange);
+
+priceField.addEventListener('input', () => {
+  if (priceField.value.length === 0) {
+    return;
+  }
+  priceUISlider.set(parseInt(priceField.value, 10));
+});
+
+// addSliderHandlers(priceField, pristine.validate(priceField));
+priceUISlider.on('update', () => {
+  priceField.value = priceUISlider.get();
+  pristine.validate(priceField);
+});
+
+typeSelect.addEventListener('change', onTypeChange);
+
 timeInSelect.addEventListener('change', onTimeInChange);
 timeOutSelect.addEventListener('change', onTimeOutChange);
 
+
+setPriceAttributes();
+
+pristine.addValidator(
+  priceField,
+  validatePrice,
+  getPriceErrorMessage,
+);
+
+pristine.addValidator(
+  numberOfRoomsSelect,
+  validateCapacity,
+  getCapacityErrorMessage
+);
+
+addMainPinMarkerHandlers(addressField);
 // валидация формы перед отправкой
 offerForm.addEventListener('submit', (evt) => {
   if (pristine.validate()) {

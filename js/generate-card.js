@@ -1,10 +1,10 @@
-import {createOffers} from './create-offers.js';
+// import {createOffers} from './create-offers.js';
 import {TYPES} from './data.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const similarOffers = createOffers();
+// const similarOffers = createOffers();
 // const similarListFragment = document.createDocumentFragment();
-const similarElements = [];
+// const similarElements = [];
 
 const fillELement = (container, dataList, getChild) => {
   if (dataList.length > 0) {
@@ -17,8 +17,9 @@ const fillELement = (container, dataList, getChild) => {
   }
 };
 
-similarOffers.forEach(({author, offer}) => {
-  const template = cardTemplate.cloneNode(true);
+// similarOffers.forEach(({author, offer}) => {
+const createCustomPopup = ({author, offer}) => {
+  const balloonTemplate = cardTemplate.cloneNode(true);
 
   const contentToSelector = {
     '.popup__title': offer.title,
@@ -31,7 +32,7 @@ similarOffers.forEach(({author, offer}) => {
   };
 
   Object.entries(contentToSelector).forEach(([selector, content]) => {
-    const element = template.querySelector(selector);
+    const element = balloonTemplate.querySelector(selector);
     if (content) {
       element.textContent = content;
     } else {
@@ -39,7 +40,7 @@ similarOffers.forEach(({author, offer}) => {
     }
   });
 
-  const photoContainer = template.querySelector('.popup__photos');
+  const photoContainer = balloonTemplate.querySelector('.popup__photos');
   const photoElement = photoContainer.querySelector('.popup__photo');
 
   fillELement(photoContainer, offer.photos, (photo) => {
@@ -48,17 +49,14 @@ similarOffers.forEach(({author, offer}) => {
     return newPhoto;
   });
 
-  const avatarElement = template.querySelector('.popup__avatar');
+  const avatarElement = balloonTemplate.querySelector('.popup__avatar');
   if (author.avatar) {
     avatarElement.src = author.avatar;
   } else {
     avatarElement.remove();
   }
-  // similarListFragment.append(template);
-  similarElements.push(template);
-});
 
-// document.querySelector('#map-canvas').append(similarListFragment);
-document.querySelector('#map-canvas').append(similarElements[6]);
+  return balloonTemplate;
+};
 
-
+export {createCustomPopup};

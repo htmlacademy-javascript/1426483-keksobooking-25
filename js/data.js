@@ -70,4 +70,23 @@ const PHOTOS_LINKS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-export { OFFER_COUNT, ROOM_TO_GUESTS, MIN_PRICE, TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS };
+const LatLngMapCenter = {
+  lat: 35.68000,
+  lng: 139.75000,
+};
+
+const MAX_PRICE = 100000;
+
+export {
+  OFFER_COUNT,
+  ROOM_TO_GUESTS,
+  MIN_PRICE,
+  TYPES,
+  TIMES,
+  FEATURES,
+  DESCRIPTIONS,
+  TITLES,
+  PHOTOS_LINKS,
+  LatLngMapCenter,
+  MAX_PRICE
+};

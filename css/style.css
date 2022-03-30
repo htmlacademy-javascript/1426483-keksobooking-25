@@ -1053,3 +1053,9 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.form__error-text {
+  color: orange;
+  font-size: 12px;
+  margin-top: 5px;
+}
