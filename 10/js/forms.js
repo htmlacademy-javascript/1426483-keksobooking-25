@@ -28,7 +28,7 @@ const priceUISlider = createSlider(sliderElement, priceField, pristine.validate(
 // функции валидации
 const validatePrice = (value) => {
   const price = Number(value || 0);
-  const inRange = price >= Number(priceField.min) && price <= MAX_PRICE;
+  const inRange = price >= Number(priceField.min) && price < MAX_PRICE;
   return /^\d+$/.test(value) && inRange;
 };
 
@@ -81,7 +81,6 @@ priceField.addEventListener('input', () => {
   priceUISlider.set(parseInt(priceField.value, 10));
 });
 
-// addSliderHandlers(priceField, pristine.validate(priceField));
 priceUISlider.on('update', () => {
   priceField.value = priceUISlider.get();
   pristine.validate(priceField);
