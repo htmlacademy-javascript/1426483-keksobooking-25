@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="leaflet/leaflet.css">
   <link rel="stylesheet" href="nouislider/nouislider.css">
+  <link rel="stylesheet" href="css/style.css">
   <title>Кексобукинг</title>
   <base href="https://htmlacademy-javascript.github.io/1426483-keksobooking-25/10/">
 </head>
@@ -121,9 +121,7 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <!-- <input id="price" name="price" type="number" placeholder="5000" max="100000"
-            data-pristine-max-message="Максимальное значение 100000"> -->
-            <input id="price" name="price" type="number" placeholder="5000">
+            <input id="price" name="price" type="number" placeholder="5000" max="100000" min="0" required>
           <div class="ad-form__slider"></div>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time">
@@ -262,9 +260,9 @@
   </template>
 
   <script src="pristine/pristine.min.js"></script>
-  <script src="js/main.js" type="module"></script>
   <script src="leaflet/leaflet.js"></script>
   <script src="nouislider/nouislider.js"></script>
+  <script src="js/main.js" type="module"></script>
 
 </body>
 

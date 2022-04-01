@@ -1,10 +1,6 @@
-// import {createOffers} from './create-offers.js';
-import {TYPES} from './data.js';
+import {offerTYPES} from './data.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-// const similarOffers = createOffers();
-// const similarListFragment = document.createDocumentFragment();
-// const similarElements = [];
 
 const fillELement = (container, dataList, getChild) => {
   if (dataList.length > 0) {
@@ -17,7 +13,6 @@ const fillELement = (container, dataList, getChild) => {
   }
 };
 
-// similarOffers.forEach(({author, offer}) => {
 const createCustomPopup = ({author, offer}) => {
   const balloonTemplate = cardTemplate.cloneNode(true);
 
@@ -25,7 +20,7 @@ const createCustomPopup = ({author, offer}) => {
     '.popup__title': offer.title,
     '.popup__text--address': offer.address,
     '.popup__text--price': `${offer.price} ₽/ночь`,
-    '.popup__type': TYPES[offer.type],
+    '.popup__type': offerTYPES[offer.type].type,
     '.popup__text--capacity': `${offer.rooms} комнаты для ${offer.guests} гостей`,
     '.popup__text--time': `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`,
     '.popup__description': offer.description

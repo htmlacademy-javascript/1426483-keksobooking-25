@@ -1,4 +1,4 @@
-import {LatLngMapCenter} from './data.js';
+import {latLngMapCenter, ZOOM, PIN_RATIO, PIN_SIZE, MAIN_PIN_SIZE} from './data.js';
 
 const getLocationString = ({ lat, lng }) => `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 
@@ -12,16 +12,20 @@ L.tileLayer(
   },
 ).addTo(map);
 
-// иконка главного маркера
-const mainPinIcon = L.icon({
-  iconUrl: './img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+const setPin = (size, filename) => L.icon({
+  iconUrl: `./img/${filename}.svg`,
+  iconSize: [size, size],
+  iconAnchor: [size * PIN_RATIO, size],
 });
+
+
+// иконка главного маркера
+const mainPinIcon = setPin(MAIN_PIN_SIZE, 'main-pin');
+
 
 // главный маркер
 const mainPinMarker = L.marker(
-  LatLngMapCenter,
+  latLngMapCenter,
   {
     icon: mainPinIcon,
     draggable: true,
@@ -31,19 +35,14 @@ const mainPinMarker = L.marker(
 mainPinMarker.addTo(map);
 
 // обычные метки
-const icon = L.icon({
-  iconUrl: './img/pin.svg',
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+const icon = setPin(PIN_SIZE,'pin');
 
 // создаем слой для меток
 const markerGroup = L.layerGroup().addTo(map);
 
 // функция создания метки
 const createMarker = (createTemplate) => (point) => {
-  const lat = point.location.lat;
-  const lng = point.location.lng;
+  const { lat, lng } =  point.location;
   const marker = L.marker(
     {
       lat,
@@ -58,23 +57,16 @@ const createMarker = (createTemplate) => (point) => {
     .bindPopup(createTemplate(point));
 };
 
-const addMainPinMarkerHandlers = (adress) => {
+const addMainPinMarkerHandlers = (address) => {
   mainPinMarker.on('moveend', (evt) => {
-    adress.value = getLocationString(evt.target.getLatLng());
+    address.value = getLocationString(evt.target.getLatLng());
   });
 };
 
 const initMap = (points, createTemplate, loadHandler) => {
-  points.forEach(createMarker( createTemplate));
-  map.on('load', loadHandler).setView(LatLngMapCenter, 12);
+  points.forEach(createMarker(createTemplate));
+  map.on('load', loadHandler).setView(latLngMapCenter, ZOOM);
 };
 
 export { addMainPinMarkerHandlers, initMap };
 
-// поведение при перезагрузке
-
-// resetButton.addEventListener('click', () => {
-//   mainPinMarker.setLatLng(LatLngCenter);
-
-//   map.setView(LatLngCenter, 16);
-// });
