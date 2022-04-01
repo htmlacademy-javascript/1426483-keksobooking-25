@@ -1,11 +1,8 @@
-import { ROOM_TO_GUESTS, MIN_PRICE, MAX_PRICE} from './data.js';
-import { createSlider, updateSlider } from './slider.js';
-import { addMainPinMarkerHandlers } from './map.js';
+import {ROOM_TO_GUESTS, offerTYPES, MAX_PRICE, VALIDATION_PRIORITY} from './data.js';
+import {createSlider, updateSlider} from './slider.js';
+import {addMainPinMarkerHandlers} from './map.js';
 
 const offerForm = document.querySelector('.ad-form');
-const filterForm = document.querySelector('.map__filters');
-const offerFormFieldsets = offerForm.querySelectorAll('fieldset');
-const filterFormFieldsets = filterForm.querySelectorAll('fieldset');
 const numberOfRoomsSelect = offerForm.querySelector('#room_number');
 const capacitySelect = offerForm.querySelector('#capacity');
 const sliderElement = offerForm.querySelector('.ad-form__slider');
@@ -15,20 +12,18 @@ const timeInSelect = offerForm.querySelector('#timein');
 const timeOutSelect = offerForm.querySelector('#timeout');
 const addressField = offerForm.querySelector('#address');
 
-// const points = createOffers();
-
 const pristine = new Pristine(offerForm, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
   errorTextClass: 'form__error-text'
 });
 
-const priceUISlider = createSlider(sliderElement, priceField, pristine.validate(priceField));
+const priceUISlider = createSlider(sliderElement, offerTYPES[typeSelect.value].min);
 
 // функции валидации
 const validatePrice = (value) => {
   const price = Number(value || 0);
-  const inRange = price >= Number(priceField.min) && price < MAX_PRICE;
+  const inRange = price >= Number(priceField.min) && price <= MAX_PRICE;
   return /^\d+$/.test(value) && inRange;
 };
 
@@ -53,14 +48,14 @@ const onCapacityChange = () => {
 };
 
 const setPriceAttributes = () => {
-  const minPrice = MIN_PRICE[typeSelect.value];
+  const minPrice = offerTYPES[typeSelect.value].min;
   priceField.min = minPrice;
   priceField.placeholder = minPrice;
 };
 
 const onTypeChange = () => {
   setPriceAttributes();
-  updateSlider(sliderElement, +MIN_PRICE[typeSelect.value]);
+  updateSlider(sliderElement, +offerTYPES[typeSelect.value].min);
 };
 
 const onTimeInChange = () => {
@@ -91,6 +86,7 @@ typeSelect.addEventListener('change', onTypeChange);
 timeInSelect.addEventListener('change', onTimeInChange);
 timeOutSelect.addEventListener('change', onTimeOutChange);
 
+addMainPinMarkerHandlers(addressField);
 
 setPriceAttributes();
 
@@ -98,6 +94,8 @@ pristine.addValidator(
   priceField,
   validatePrice,
   getPriceErrorMessage,
+  VALIDATION_PRIORITY,
+  true
 );
 
 pristine.addValidator(
@@ -106,7 +104,6 @@ pristine.addValidator(
   getCapacityErrorMessage
 );
 
-addMainPinMarkerHandlers(addressField);
 // валидация формы перед отправкой
 offerForm.addEventListener('submit', (evt) => {
   if (pristine.validate()) {
@@ -115,31 +112,4 @@ offerForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 });
 
-// активация форм
-const  deactivateFieldset = (fieldset) => {
-  fieldset.disabled = true;
-};
-
-const activateFieldset = (fieldset) => {
-  fieldset.disabled = false;
-};
-
-const deactivateForms = () => {
-  offerForm.classList.add('ad-form--disabled');
-  filterForm.classList.add('map__filters--disabled');
-
-  offerFormFieldsets.forEach(deactivateFieldset);
-
-  filterFormFieldsets.forEach(deactivateFieldset);
-};
-
-const activateForms = () => {
-  offerForm.classList.remove('ad-form--disabled');
-  filterForm.classList.remove('map__filters--disabled');
-
-  offerFormFieldsets.forEach(activateFieldset);
-
-  filterFormFieldsets.forEach(activateFieldset);
-};
-
-export {deactivateForms, activateForms};
+export {offerForm};

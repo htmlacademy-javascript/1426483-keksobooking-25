@@ -1,13 +1,18 @@
 import './generate-card.js';
-// import './forms.js';
-import './map.js';
-import {deactivateForms, activateForms} from './forms.js';
+import {filterForm} from './filter-form.js';
+import {offerForm} from './offer-form.js';
+import {toggleForm} from './util.js';
 import {createOffers} from './create-offers.js';
 import {createCustomPopup} from './generate-card.js';
-import { initMap } from './map.js';
+import {initMap} from './map.js';
 
 const points = createOffers();
 
-deactivateForms();
+const toggleForms = (isActive) => {
+  toggleForm(offerForm, 'ad-form--disabled', isActive);
+  toggleForm(filterForm, 'map__filters--disabled', isActive);
+};
 
-initMap(points, createCustomPopup, activateForms);
+toggleForms(false);
+
+initMap(points, createCustomPopup, () => toggleForms(true));

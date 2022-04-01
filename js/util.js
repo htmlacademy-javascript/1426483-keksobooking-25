@@ -28,4 +28,12 @@ const getRandomArrayPart = (arr) => {
 
 const getNumberWithLeadZero = (i) => (i < 10) ? `0${i}` : i;
 
-export {getRandomInteger, getRandomRealNumber, getRandomArrayElement, getRandomArrayPart, getNumberWithLeadZero};
+const toggleForm = (form, activClassName, isActive) => {
+  const fieldsetList = form.querySelectorAll('fieldset');
+  form.classList.toggle(activClassName);
+  fieldsetList.forEach((fieldset) => {
+    fieldset.disabled = !isActive;
+  });
+};
+
+export {getRandomInteger, getRandomRealNumber, getRandomArrayElement, getRandomArrayPart, getNumberWithLeadZero, toggleForm};
