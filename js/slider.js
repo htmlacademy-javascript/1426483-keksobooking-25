@@ -1,13 +1,13 @@
-import {MAX_PRICE, MIN_PRICE, STEP} from './data.js';
+import { MAX_PRICE, STEP } from './data.js';
 
-const createSlider = (sliderElement, start) => {
+const createSlider = (sliderElement, min, onSliderChange ) => {
 
   noUiSlider.create(sliderElement, {
     range: {
-      min: MIN_PRICE,
+      min: min,
       max: MAX_PRICE,
     },
-    start: start,
+    start: min,
     step: STEP,
     connect: 'lower',
     format: {
@@ -20,18 +20,20 @@ const createSlider = (sliderElement, start) => {
     },
   });
 
+  sliderElement.noUiSlider.on('slide', onSliderChange);
+
   return sliderElement.noUiSlider;
 };
 
-const updateSlider = (slider, value) => {
-  slider.noUiSlider.updateOptions({
+const updateSlider = (slider, min, value) => {
+  slider.updateOptions({
     range: {
-      min: MIN_PRICE,
+      min: min,
       max: MAX_PRICE,
     },
     step: STEP,
   });
-  slider.noUiSlider.set(value);
+  slider.set(value);
 };
 
-export {createSlider, updateSlider};
+export { createSlider, updateSlider };

@@ -35,5 +35,14 @@ const toggleForm = (form, activClassName, isActive) => {
     fieldset.disabled = !isActive;
   });
 };
+const isEscKey = (evt) => (evt.key === 'Escape');
 
-export {getRandomInteger, getRandomRealNumber, getRandomArrayElement, getRandomArrayPart, getNumberWithLeadZero, toggleForm};
+export {
+  getRandomInteger,
+  getRandomRealNumber,
+  getRandomArrayElement,
+  getRandomArrayPart,
+  getNumberWithLeadZero,
+  toggleForm,
+  isEscKey
+};

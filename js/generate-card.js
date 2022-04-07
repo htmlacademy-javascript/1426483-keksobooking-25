@@ -1,9 +1,9 @@
-import {offerTYPES} from './data.js';
+import { OFFER_TYPES } from './data.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const fillELement = (container, dataList, getChild) => {
-  if (dataList.length > 0) {
+  if (dataList) {
     container.innerHTML = '';
     dataList.forEach((item) => {
       container.append(getChild(item));
@@ -20,7 +20,7 @@ const createCustomPopup = ({author, offer}) => {
     '.popup__title': offer.title,
     '.popup__text--address': offer.address,
     '.popup__text--price': `${offer.price} ₽/ночь`,
-    '.popup__type': offerTYPES[offer.type].type,
+    '.popup__type': OFFER_TYPES[offer.type].type,
     '.popup__text--capacity': `${offer.rooms} комнаты для ${offer.guests} гостей`,
     '.popup__text--time': `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`,
     '.popup__description': offer.description
@@ -54,4 +54,4 @@ const createCustomPopup = ({author, offer}) => {
   return balloonTemplate;
 };
 
-export {createCustomPopup};
+export { createCustomPopup };

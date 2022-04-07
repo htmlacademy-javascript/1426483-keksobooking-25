@@ -7,7 +7,7 @@ const ROOM_TO_GUESTS = {
   100: ['0']
 };
 
-const offerTYPES = {
+const OFFER_TYPES = {
   palace: {
     type: 'Дворец',
     min: '10000'
@@ -93,10 +93,20 @@ const PIN_SIZE = 40;
 const MAIN_PIN_SIZE = 52;
 const PIN_RATIO = 0.5;
 
+const SUCCESS_MESSAGE = 'Ваше объявление успешно размещено!';
+const ERROR_MESSAGE = 'Ошибка размещения объявления';
+const BUTTON_TEXT = 'Попробовать снова';
+
+const AD_FORM_DISABLED_CLASS = 'ad-form--disabled';
+const FILTER_FORM_DISABLED_CLASS = 'map__filters--disabled';
+
+const SERVER = 'https://25.javascript.pages.academy/keksobooking';
+
+
 export {
   OFFER_COUNT,
   ROOM_TO_GUESTS,
-  offerTYPES,
+  OFFER_TYPES,
   TIMES,
   FEATURES,
   DESCRIPTIONS,
@@ -110,5 +120,11 @@ export {
   ZOOM,
   PIN_RATIO,
   PIN_SIZE,
-  MAIN_PIN_SIZE
+  MAIN_PIN_SIZE,
+  SUCCESS_MESSAGE,
+  ERROR_MESSAGE,
+  BUTTON_TEXT,
+  SERVER,
+  AD_FORM_DISABLED_CLASS,
+  FILTER_FORM_DISABLED_CLASS
 };
