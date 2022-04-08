@@ -1,4 +1,4 @@
-import {latLngMapCenter, ZOOM, PIN_RATIO, PIN_SIZE, MAIN_PIN_SIZE} from './data.js';
+import { latLngMapCenter, ZOOM, PIN_RATIO, PIN_SIZE, MAIN_PIN_SIZE } from './data.js';
 
 const getLocationString = ({ lat, lng }) => `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 
@@ -35,23 +35,14 @@ const mainPinMarker = L.marker(
 mainPinMarker.addTo(map);
 
 // обычные метки
-const icon = setPin(PIN_SIZE,'pin');
+const icon = setPin(PIN_SIZE, 'pin');
 
 // создаем слой для меток
 const markerGroup = L.layerGroup().addTo(map);
 
 // функция создания метки
 const createMarker = (createTemplate) => (point) => {
-  const { lat, lng } =  point.location;
-  const marker = L.marker(
-    {
-      lat,
-      lng,
-    },
-    {
-      icon,
-    },
-  );
+  const marker = L.marker(point.location, { icon });
   marker
     .addTo(markerGroup)
     .bindPopup(createTemplate(point));
@@ -63,10 +54,12 @@ const addMainPinMarkerHandlers = (address) => {
   });
 };
 
-const initMap = (points, createTemplate, loadHandler) => {
+const resetMap = () => map.setView(latLngMapCenter, ZOOM);
+
+const initMap = (points, createTemplate, onLoadMap) => {
   points.forEach(createMarker(createTemplate));
-  map.on('load', loadHandler).setView(latLngMapCenter, ZOOM);
+  map.on('load', onLoadMap).setView(latLngMapCenter, ZOOM);
 };
 
-export { addMainPinMarkerHandlers, initMap };
+export { addMainPinMarkerHandlers, initMap, mainPinMarker, resetMap };
 
