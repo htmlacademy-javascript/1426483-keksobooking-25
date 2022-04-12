@@ -18,7 +18,6 @@ const setPin = (size, filename) => L.icon({
   iconAnchor: [size * PIN_RATIO, size],
 });
 
-
 // иконка главного маркера
 const mainPinIcon = setPin(MAIN_PIN_SIZE, 'main-pin');
 
@@ -38,28 +37,35 @@ mainPinMarker.addTo(map);
 const icon = setPin(PIN_SIZE, 'pin');
 
 // создаем слой для меток
-const markerGroup = L.layerGroup().addTo(map);
+const layerForMarkers = L.layerGroup().addTo(map);
 
 // функция создания метки
 const createMarker = (createTemplate) => (point) => {
   const marker = L.marker(point.location, { icon });
   marker
-    .addTo(markerGroup)
+    .addTo(layerForMarkers)
     .bindPopup(createTemplate(point));
 };
 
-const addMainPinMarkerHandlers = (address) => {
+const createMarkersGroup = (points, createTemplate) => {
+  points.forEach(createMarker(createTemplate));
+};
+
+const onMainPinMarkerMove = (address) => {
   mainPinMarker.on('moveend', (evt) => {
     address.value = getLocationString(evt.target.getLatLng());
   });
 };
 
-const resetMap = () => map.setView(latLngMapCenter, ZOOM);
+const resetMap = () => {
+  mainPinMarker.setLatLng(latLngMapCenter);
+  map.closePopup().setView(latLngMapCenter, ZOOM);
+};
 
 const initMap = (points, createTemplate, onLoadMap) => {
-  points.forEach(createMarker(createTemplate));
+  createMarkersGroup(points, createTemplate);
   map.on('load', onLoadMap).setView(latLngMapCenter, ZOOM);
 };
 
-export { addMainPinMarkerHandlers, initMap, mainPinMarker, resetMap };
+export { onMainPinMarkerMove, initMap, mainPinMarker, resetMap, layerForMarkers, createMarker, createMarkersGroup };
 

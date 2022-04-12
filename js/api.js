@@ -16,10 +16,10 @@ const getOffers = (onSuccess) => () => {
       createPopup(false, 'данные не загрузились', 'Добавить объявление');
       return [];
     })
-    .then((offers) => onSuccess(offers));
+    .then(onSuccess);
 };
 
-const postOffer = (offer, onSuccess, onFail) => {
+const postOffer = (offer, onSuccess) =>
   fetch(
     SERVER,
     {
@@ -34,9 +34,7 @@ const postOffer = (offer, onSuccess, onFail) => {
         onSuccess();
       } else {
         createPopup(false, ERROR_MESSAGE, BUTTON_TEXT);
-        onFail();
       }
     });
-};
 
 export { getOffers, postOffer };

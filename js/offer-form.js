@@ -1,6 +1,6 @@
-import { ROOM_TO_GUESTS, OFFER_TYPES, MAX_PRICE, VALIDATION_PRIORITY, latLngMapCenter } from './data.js';
+import { ROOM_TO_GUESTS, OFFER_TYPES, MAX_PRICE, VALIDATION_PRIORITY } from './data.js';
 import { createSlider, updateSlider } from './slider.js';
-import { addMainPinMarkerHandlers, mainPinMarker, resetMap } from './map.js';
+import { onMainPinMarkerMove, resetMap } from './map.js';
 import { postOffer } from './api.js';
 import { filterForm } from './filter-form.js';
 
@@ -44,12 +44,9 @@ const priceUISlider = createSlider(
 const resetPage = () => {
   offerForm.reset();
   filterForm.reset();
-  mainPinMarker.setLatLng(latLngMapCenter);
-  if (document.querySelector('.leaflet-popup')) {
-    document.querySelector('.leaflet-popup').remove();
-  }
+  pristine.reset();
   resetMap();
-  updateSlider( priceUISlider, parseInt(priceField.min, 10), priceField.min);
+  updateSlider(priceUISlider, parseInt(priceField.min, 10), priceField.min);
 };
 
 // функции валидации
@@ -91,15 +88,11 @@ const onTypeChange = () => {
   const type = typeSelect.value;
   setPriceAttributes(type);
   if (priceField.value) {
-    updateSlider( priceUISlider, parseInt(priceField.min, 10), priceField.value);
+    updateSlider(priceUISlider, parseInt(priceField.min, 10), priceField.value);
     pristine.validate(priceField);
   } else {
-    updateSlider( priceUISlider, parseInt(priceField.min, 10), priceField.min);
+    updateSlider(priceUISlider, parseInt(priceField.min, 10), priceField.min);
   }
-};
-
-const onResetButtonClick = () => {
-  resetPage();
 };
 
 // слушатели
@@ -116,9 +109,14 @@ typeSelect.addEventListener('change', onTypeChange);
 timeInSelect.addEventListener('change', onTimeInChange);
 timeOutSelect.addEventListener('change', onTimeOutChange);
 
-resetButton.addEventListener('click', onResetButtonClick);
+const setResetButtonClick = (cb) => {
+  resetButton.addEventListener('click', () => {
+    resetPage();
+    cb();
+  });
+};
 
-addMainPinMarkerHandlers(addressField);
+onMainPinMarkerMove(addressField);
 
 pristine.addValidator(
   priceField,
@@ -150,11 +148,8 @@ offerForm.addEventListener('submit', (evt) => {
   if (pristine.validate()) {
     blockSubmitButton();
     const formData = new FormData(evt.target);
-    postOffer(formData, () => {
-      resetPage();
-      unblockSubmitButton();
-    }, unblockSubmitButton());
+    postOffer(formData, resetPage).then(unblockSubmitButton);
   }
 });
 
-export { offerForm };
+export { offerForm, setResetButtonClick };

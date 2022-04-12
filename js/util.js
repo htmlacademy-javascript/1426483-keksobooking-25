@@ -37,6 +37,23 @@ const toggleForm = (form, activClassName, isActive) => {
 };
 const isEscKey = (evt) => (evt.key === 'Escape');
 
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const getPriceLevel = (price) =>  {
+  if (price <= 10000) {
+    return 'low';
+  } else if (price >= 50000) {
+    return 'high';
+  }
+  return 'middle';
+};
+
 export {
   getRandomInteger,
   getRandomRealNumber,
@@ -44,5 +61,7 @@ export {
   getRandomArrayPart,
   getNumberWithLeadZero,
   toggleForm,
-  isEscKey
+  isEscKey,
+  getPriceLevel,
+  debounce
 };
