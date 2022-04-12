@@ -44,6 +44,7 @@ const priceUISlider = createSlider(
 const resetPage = () => {
   offerForm.reset();
   filterForm.reset();
+  pristine.reset();
   mainPinMarker.setLatLng(latLngMapCenter);
   resetMap();
   updateSlider(priceUISlider, parseInt(priceField.min, 10), priceField.min);
