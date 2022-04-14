@@ -54,6 +54,14 @@ const getPriceLevel = (price) =>  {
   return 'middle';
 };
 
+const checkEquality = ([valueA, valueB]) => {
+  if (valueB === 'any') {
+    return true;
+  }
+  const ethalon = typeof valueA === 'number' ? parseInt(valueB, 10) : valueB;
+  return valueA === ethalon;
+};
+
 export {
   getRandomInteger,
   getRandomRealNumber,
@@ -63,5 +71,6 @@ export {
   toggleForm,
   isEscKey,
   getPriceLevel,
-  debounce
+  debounce,
+  checkEquality
 };

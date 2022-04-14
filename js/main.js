@@ -3,7 +3,7 @@ import { filterForm } from './filter-form.js';
 import { offerForm, setResetButtonClick } from './offer-form.js';
 import { toggleForm } from './util.js';
 import { createCustomPopup } from './generate-card.js';
-import { initMap, layerForMarkers, createMarker, createMarkersGroup } from './map.js';
+import { initMap, layerForMarkers, createMarker, createMarkersGroup, resetMap } from './map.js';
 import { AD_FORM_DISABLED_CLASS, FILTER_FORM_DISABLED_CLASS, OFFER_COUNT, RERENDER_DELAY } from './data.js';
 import { setFilterChange, isSimilarOffer } from './filter-form.js';
 import { debounce } from './util.js';
@@ -33,6 +33,8 @@ const loadMap = getOffers((offers) => {
   );
   setResetButtonClick(
     () => {
+      filterForm.reset();
+      resetMap();
       layerForMarkers.clearLayers();
       createMarkersGroup(offers.slice(0, OFFER_COUNT), createCustomPopup);
     });

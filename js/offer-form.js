@@ -1,9 +1,7 @@
 import { ROOM_TO_GUESTS, OFFER_TYPES, MAX_PRICE, VALIDATION_PRIORITY } from './data.js';
 import { createSlider, updateSlider } from './slider.js';
-import { onMainPinMarkerMove, resetMap } from './map.js';
+import { onMainPinMarkerMove } from './map.js';
 import { postOffer } from './api.js';
-import { filterForm } from './filter-form.js';
-
 
 const offerForm = document.querySelector('.ad-form');
 const numberOfRoomsSelect = offerForm.querySelector('#room_number');
@@ -15,7 +13,6 @@ const timeInSelect = offerForm.querySelector('#timein');
 const timeOutSelect = offerForm.querySelector('#timeout');
 const addressField = offerForm.querySelector('#address');
 const submitButton = offerForm.querySelector('.ad-form__submit');
-const resetButton = offerForm.querySelector('.ad-form__reset');
 
 const initialType = typeSelect.value;
 
@@ -40,14 +37,6 @@ const priceUISlider = createSlider(
     priceField.value = priceUISlider.get();
     pristine.validate(priceField);
   });
-
-const resetPage = () => {
-  offerForm.reset();
-  filterForm.reset();
-  pristine.reset();
-  resetMap();
-  updateSlider(priceUISlider, parseInt(priceField.min, 10), priceField.min);
-};
 
 // функции валидации
 const validatePrice = (value) => {
@@ -110,8 +99,10 @@ timeInSelect.addEventListener('change', onTimeInChange);
 timeOutSelect.addEventListener('change', onTimeOutChange);
 
 const setResetButtonClick = (cb) => {
-  resetButton.addEventListener('click', () => {
-    resetPage();
+  offerForm.addEventListener('reset', () => {
+    offerForm.reset();
+    pristine.reset();
+    updateSlider(priceUISlider, parseInt(priceField.min, 10), priceField.min);
     cb();
   });
 };
@@ -148,7 +139,7 @@ offerForm.addEventListener('submit', (evt) => {
   if (pristine.validate()) {
     blockSubmitButton();
     const formData = new FormData(evt.target);
-    postOffer(formData, resetPage).then(unblockSubmitButton);
+    postOffer(formData, () => offerForm.reset()).then(unblockSubmitButton);
   }
 });
 
