@@ -45,6 +45,22 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
+const getPriceLevel = (price) =>  {
+  if (price <= 10000) {
+    return 'low';
+  } else if (price >= 50000) {
+    return 'high';
+  }
+  return 'middle';
+};
+
+const checkEquality = ([valueA, valueB]) => {
+  if (valueB === 'any') {
+    return true;
+  }
+  const ethalon = typeof valueA === 'number' ? parseInt(valueB, 10) : valueB;
+  return valueA === ethalon;
+};
 
 export {
   getRandomInteger,
@@ -54,5 +70,7 @@ export {
   getNumberWithLeadZero,
   toggleForm,
   isEscKey,
-  debounce
+  getPriceLevel,
+  debounce,
+  checkEquality
 };
