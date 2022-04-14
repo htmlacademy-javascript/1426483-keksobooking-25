@@ -101,6 +101,7 @@ const AD_FORM_DISABLED_CLASS = 'ad-form--disabled';
 const FILTER_FORM_DISABLED_CLASS = 'map__filters--disabled';
 
 const SERVER = 'https://25.javascript.pages.academy/keksobooking';
+const RERENDER_DELAY = 500;
 
 
 export {
@@ -126,5 +127,6 @@ export {
   BUTTON_TEXT,
   SERVER,
   AD_FORM_DISABLED_CLASS,
-  FILTER_FORM_DISABLED_CLASS
+  FILTER_FORM_DISABLED_CLASS,
+  RERENDER_DELAY
 };
