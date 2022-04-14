@@ -103,6 +103,8 @@ const FILTER_FORM_DISABLED_CLASS = 'map__filters--disabled';
 const SERVER = 'https://25.javascript.pages.academy/keksobooking';
 const RERENDER_DELAY = 500;
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 
 export {
   OFFER_COUNT,
@@ -128,5 +130,6 @@ export {
   SERVER,
   AD_FORM_DISABLED_CLASS,
   FILTER_FORM_DISABLED_CLASS,
-  RERENDER_DELAY
+  RERENDER_DELAY,
+  FILE_TYPES
 };

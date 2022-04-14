@@ -7,6 +7,7 @@ import { initMap, layerForMarkers, createMarker, createMarkersGroup, resetMap } 
 import { AD_FORM_DISABLED_CLASS, FILTER_FORM_DISABLED_CLASS, OFFER_COUNT, RERENDER_DELAY } from './data.js';
 import { setFilterChange, isSimilarOffer } from './filter-form.js';
 import { debounce } from './util.js';
+import './add-foto.js';
 
 const toggleForms = (isActive) => {
   toggleForm(offerForm, AD_FORM_DISABLED_CLASS, isActive);
