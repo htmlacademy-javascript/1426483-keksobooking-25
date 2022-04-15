@@ -7,6 +7,8 @@ import { initMap, layerForMarkers, createMarker, createMarkersGroup, resetMap } 
 import { AD_FORM_DISABLED_CLASS, FILTER_FORM_DISABLED_CLASS, OFFER_COUNT, RERENDER_DELAY } from './data.js';
 import { setFilterChange, isSimilarOffer } from './filter-form.js';
 import { debounce } from './util.js';
+import './add-photo.js';
+import { resetPhoto } from './add-photo.js';
 
 const toggleForms = (isActive) => {
   toggleForm(offerForm, AD_FORM_DISABLED_CLASS, isActive);
@@ -37,6 +39,7 @@ const loadMap = getOffers((offers) => {
       resetMap();
       layerForMarkers.clearLayers();
       createMarkersGroup(offers.slice(0, OFFER_COUNT), createCustomPopup);
+      resetPhoto();
     });
 });
 
