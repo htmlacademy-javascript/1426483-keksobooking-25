@@ -1,10 +1,10 @@
 import { FILE_TYPES } from './data.js';
 const avatarElement = document.querySelector('[name="avatar"]');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
-const fotoElement = document.querySelector('[name="images"]');
-const fotoPreview = document.querySelector('.ad-form__photo');
+const photoElement = document.querySelector('[name="images"]');
+const photoPreview = document.querySelector('.ad-form__photo');
 
-const setFotoChange = (fileChooser, preview) => {
+const setPhotoChange = (fileChooser, preview) => {
   fileChooser.addEventListener('change', () => {
 
     const file = fileChooser.files[0];
@@ -15,6 +15,7 @@ const setFotoChange = (fileChooser, preview) => {
       if (preview.tagName === 'IMG') {
         preview.src = URL.createObjectURL(file);
       } else {
+        preview.innerHTML = '';
         const imageElementHTML = document.createElement('img');
         imageElementHTML.setAttribute('src', URL.createObjectURL(file));
         imageElementHTML.setAttribute('alt', 'Фотография жилья');
@@ -26,5 +27,12 @@ const setFotoChange = (fileChooser, preview) => {
   });
 };
 
-setFotoChange(avatarElement, avatarPreview);
-setFotoChange(fotoElement, fotoPreview);
+setPhotoChange(avatarElement, avatarPreview);
+setPhotoChange(photoElement, photoPreview);
+
+const resetPhoto = () => {
+  avatarPreview.src = 'img/muffin-grey.svg';
+  photoPreview.innerHTML = '';
+};
+
+export { resetPhoto };
