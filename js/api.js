@@ -1,5 +1,5 @@
 import { createPopup } from './popup.js';
-import { SUCCESS_MESSAGE, ERROR_MESSAGE, BUTTON_TEXT, SERVER } from './data.js';
+import { SUCCESS_MESSAGE, ERROR_MESSAGE, BUTTON_TEXT, SERVER } from './const.js';
 
 const getOffers = (onSuccess) => () => {
   fetch(

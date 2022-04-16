@@ -1,17 +1,17 @@
 import { getPriceLevel, checkEquality } from './util.js';
-const filterForm = document.querySelector('.map__filters');
-const filterFormFields = filterForm.querySelectorAll('select');
-const housingFeatures = filterForm.querySelectorAll('[name="features"]');
-const housingType = filterForm.querySelector('[name="housing-type"]');
-const housingPrice = filterForm.querySelector('[name="housing-price"]');
-const housingRooms = filterForm.querySelector('[name="housing-rooms"]');
-const housingGuests = filterForm.querySelector('[name="housing-guests"]');
+const filterFormElement = document.querySelector('.map__filters');
+const filterFieldElements = filterFormElement.querySelectorAll('select');
+const housingFeatureElements = filterFormElement.querySelectorAll('[name="features"]');
+const housingTypeElement = filterFormElement.querySelector('[name="housing-type"]');
+const housingPriceElement = filterFormElement.querySelector('[name="housing-price"]');
+const housingRoomsElement = filterFormElement.querySelector('[name="housing-rooms"]');
+const housingGuestsElement = filterFormElement.querySelector('[name="housing-guests"]');
 
 const matchFeatures = (features) => {
   if (!features) {
     return false;
   }
-  const checkedElements = filterForm.querySelectorAll('[name="features"]:checked');
+  const checkedElements = filterFormElement.querySelectorAll('[name="features"]:checked');
   const checkedValues = Array.from(checkedElements, ({ value }) => value);
   const matches = features.filter((feature) => checkedValues.includes(feature));
 
@@ -20,15 +20,15 @@ const matchFeatures = (features) => {
 
 const isSimilarOffer = ({ offer }) =>
   [
-    [offer.type, housingType.value],
-    [getPriceLevel(offer.price), housingPrice.value],
-    [offer.rooms, housingRooms.value],
-    [offer.guests, housingGuests.value]
+    [offer.type, housingTypeElement.value],
+    [getPriceLevel(offer.price), housingPriceElement.value],
+    [offer.rooms, housingRoomsElement.value],
+    [offer.guests, housingGuestsElement.value]
   ].every(checkEquality) && matchFeatures(offer.features);
 
 const setFilterChange = (cb) => {
-  filterFormFields.forEach((filter) => filter.addEventListener('change', () => cb()));
-  housingFeatures.forEach((feature) => feature.addEventListener('change', () => cb()));
+  filterFieldElements.forEach((filter) => filter.addEventListener('change', () => cb()));
+  housingFeatureElements.forEach((feature) => feature.addEventListener('change', () => cb()));
 };
 
-export { filterForm, setFilterChange, isSimilarOffer };
+export { filterFormElement, setFilterChange, isSimilarOffer };

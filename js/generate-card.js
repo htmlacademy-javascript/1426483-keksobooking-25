@@ -1,4 +1,4 @@
-import { OFFER_TYPES } from './data.js';
+import { OFFER_TYPES } from './const.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 

@@ -1,9 +1,9 @@
-import { OFFER_COUNT, OFFER_TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS } from './data.js';
+import { OFFER_COUNT, COORD_DECIMALS, OFFER_TYPES, TIMES, FEATURES, DESCRIPTIONS, TITLES, PHOTOS_LINKS, LatRange, LngRange, PriceRange, RoomsRange, GuestsRange } from './const.js';
 import { getRandomInteger, getRandomRealNumber, getRandomArrayElement, getRandomArrayPart, getNumberWithLeadZero } from './util.js';
 
 const createOffer = (i) => {
-  const lat = getRandomRealNumber(35.65, 35.7, 5);
-  const lng = getRandomRealNumber(139.7, 139.8, 5);
+  const lat = getRandomRealNumber(LatRange.MIN, LatRange.MAX, COORD_DECIMALS);
+  const lng = getRandomRealNumber(LngRange.MIN, LngRange.MAX, COORD_DECIMALS);
   const checks = [getRandomInteger(0, TIMES.length - 1), getRandomInteger(0, TIMES.length - 1)];
   return {
     author: {
@@ -12,10 +12,10 @@ const createOffer = (i) => {
     offer: {
       title: TITLES[i],
       address: `${lat}, ${lng}`,
-      price: getRandomInteger(1, 100),
+      price: getRandomInteger(PriceRange.MIN, PriceRange.MAX),
       type: getRandomArrayElement(Object.keys(OFFER_TYPES)),
-      rooms: getRandomInteger(1, 10),
-      guests: getRandomInteger(1, 10),
+      rooms: getRandomInteger(RoomsRange.MIN, RoomsRange.MAX),
+      guests: getRandomInteger(GuestsRange.MIN, GuestsRange.MAX),
       checkin: TIMES[Math.min(...checks)],
       checkout: TIMES[Math.max(...checks)],
       features: getRandomArrayElement(FEATURES),
