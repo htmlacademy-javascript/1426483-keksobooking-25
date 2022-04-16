@@ -1,5 +1,7 @@
 const OFFER_COUNT = 10;
 
+const COORD_DECIMALS = 5;
+
 const ROOM_TO_GUESTS = {
   1: ['1'],
   2: ['1', '2'],
@@ -105,9 +107,35 @@ const RERENDER_DELAY = 500;
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
+const LatRange = {
+  MIN: 35.65,
+  MAX: 35.7,
+};
+
+const LngRange = {
+  MIN: 139.7,
+  MAX: 139.8,
+};
+
+const PriceRange = {
+  MIN: 10000,
+  MAX: 50000,
+};
+
+const RoomsRange = {
+  MIN: 1,
+  MAX: 10,
+};
+
+const GuestsRange = {
+  MIN: 1,
+  MAX: 20,
+};
+
 
 export {
   OFFER_COUNT,
+  COORD_DECIMALS,
   ROOM_TO_GUESTS,
   OFFER_TYPES,
   TIMES,
@@ -131,5 +159,10 @@ export {
   AD_FORM_DISABLED_CLASS,
   FILTER_FORM_DISABLED_CLASS,
   RERENDER_DELAY,
-  FILE_TYPES
+  FILE_TYPES,
+  LatRange,
+  LngRange,
+  PriceRange,
+  RoomsRange,
+  GuestsRange
 };

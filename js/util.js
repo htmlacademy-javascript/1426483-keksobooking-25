@@ -1,3 +1,5 @@
+import { PriceRange } from './const.js';
+
 const getRandomInteger = (min, max) => {
   if (min < max && min >= 0) {
     const random = min + Math.random() * (max - min + 1);
@@ -46,9 +48,10 @@ const debounce = (callback, timeoutDelay) => {
 };
 
 const getPriceLevel = (price) =>  {
-  if (price <= 10000) {
+  if (price <= PriceRange.MIN) {
     return 'low';
-  } else if (price >= 50000) {
+  }
+  if (price >= PriceRange.MAX) {
     return 'high';
   }
   return 'middle';

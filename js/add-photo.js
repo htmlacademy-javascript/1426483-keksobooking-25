@@ -1,4 +1,4 @@
-import { FILE_TYPES } from './data.js';
+import { FILE_TYPES } from './const.js';
 const avatarElement = document.querySelector('[name="avatar"]');
 const avatarPreviewElement = document.querySelector('.ad-form-header__preview img');
 const photoElement = document.querySelector('[name="images"]');

@@ -1,6 +1,6 @@
-import { latLngMapCenter, ZOOM, PIN_RATIO, PIN_SIZE, MAIN_PIN_SIZE } from './data.js';
+import { COORD_DECIMALS, latLngMapCenter, ZOOM, PIN_RATIO, PIN_SIZE, MAIN_PIN_SIZE } from './const.js';
 
-const getLocationString = ({ lat, lng }) => `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+const getLocationString = ({ lat, lng }) => `${lat.toFixed(COORD_DECIMALS)}, ${lng.toFixed(COORD_DECIMALS)}`;
 
 const map = L.map('map-canvas');
 

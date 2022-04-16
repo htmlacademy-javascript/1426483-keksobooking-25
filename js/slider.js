@@ -1,4 +1,4 @@
-import { MAX_PRICE, STEP } from './data.js';
+import { MAX_PRICE, STEP } from './const.js';
 
 const createSlider = (sliderElement, min, onSliderChange ) => {
 

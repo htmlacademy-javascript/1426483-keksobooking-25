@@ -1,4 +1,4 @@
-import { ROOM_TO_GUESTS, OFFER_TYPES, MAX_PRICE, VALIDATION_PRIORITY } from './data.js';
+import { ROOM_TO_GUESTS, OFFER_TYPES, MAX_PRICE, VALIDATION_PRIORITY } from './const.js';
 import { createSlider, updateSlider } from './slider.js';
 import { onMainPinMarkerMove } from './map.js';
 import { postOffer } from './api.js';
